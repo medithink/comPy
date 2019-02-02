@@ -1,0 +1,27 @@
+﻿rem 準備としてフォルダ構成はデスクトップ下にmecab_pyフォルダを置く
+rem デスクトップにmecabフォルダも設定
+rem ユーザー辞書の作成から実行までを含める
+rem
+rem ユーザー辞書の作成
+rem current directoryをcsvが存在するフォルダへ移動
+cd %USERPROFILE%\Desktop\mecab_py\mecab_userdic
+rem
+rem .dicファイルの作成
+%USERPROFILE%\Desktop\MeCab\bin\mecab-dict-index -d %USERPROFILE%\Desktop\MeCab\dic\ipadic -u medi.dic -f utf-8 -t utf-8 %USERPROFILE%\Desktop\mecab_py\mecab_userdic\medi.csv
+%USERPROFILE%\Desktop\MeCab\bin\mecab-dict-index -d %USERPROFILE%\Desktop\MeCab\dic\ipadic -u uroOpVal.dic -f utf-8 -t utf-8 %USERPROFILE%\Desktop\mecab_py\mecab_userdic\uroOpVal.csv
+%USERPROFILE%\Desktop\MeCab\bin\mecab-dict-index -d %USERPROFILE%\Desktop\MeCab\dic\ipadic -u bloOpVal.dic -f utf-8 -t utf-8 %USERPROFILE%\Desktop\mecab_py\mecab_userdic\bloOpVal.csv
+rem
+rem エラー回避のためコピー先の.dicを削除
+del %USERPROFILE%\Desktop\MeCab\dic\ipadic\medi.dic
+del %USERPROFILE%\Desktop\MeCab\dic\ipadic\uroOpVal.dic
+del %USERPROFILE%\Desktop\MeCab\dic\ipadic\bloOpVal.dic
+rem 上で作成した.dicファイルのコピー
+copy "medi.dic" "%USERPROFILE%\Desktop\MeCab\dic\ipadic\medi.dic"
+copy "uroOpVal.dic" "%USERPROFILE%\Desktop\MeCab\dic\ipadic\uroOpVal.dic"
+copy "bloOpVal.dic" "%USERPROFILE%\Desktop\MeCab\dic\ipadic\bloOpVal.dic"
+rem
+rem current directoryをmecab実行pythonファイルのあるフォルダへ移動
+cd %USERPROFILE%\Desktop\mecab_py
+rem
+rem mecabを実行（後ろの.txtに形態素解析用の文章を入れる）
+python %USERPROFILE%\Desktop\mecab_py\py\analyzeKokushi.py
